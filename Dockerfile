@@ -2,6 +2,7 @@ FROM ubuntu:18.04
 LABEL "org.opencontainers.image.authors"="levkov"
 EXPOSE 9001 22 3000
 WORKDIR /tmp
+ARG GRAFANA_VERSION=5.3.0
 
 RUN apt-get update && \
     apt-get install wget \
@@ -14,9 +15,9 @@ RUN apt-get update && \
                     dos2unix \
                     -y
 
-RUN wget --no-check-certificate https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.2.1_amd64.deb  && \
-    dpkg -i grafana_5.2.1_amd64.deb && \
-    rm -rf grafana_5.2.1_amd64.deb
+RUN wget --no-check-certificate https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_${GRAFANA_VERSION}_amd64.deb  && \
+    dpkg -i grafana_${GRAFANA_VERSION}_amd64.deb && \
+    rm -rf grafana_${GRAFANA_VERSION}_amd64.deb
 
 RUN chown -R grafana:grafana /var/lib/grafana /var/log/grafana
 RUN chown -R grafana:grafana /etc/grafana 
