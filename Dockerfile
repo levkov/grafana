@@ -3,6 +3,7 @@ LABEL "org.opencontainers.image.authors"="levkov"
 EXPOSE 9001 22 3000
 WORKDIR /tmp
 ARG GRAFANA_VERSION=5.3.0
+ARG ROOT_PASSWORD=ContaineR
 
 RUN apt-get update && \
     apt-get install wget \
@@ -27,7 +28,7 @@ RUN grafana-cli plugins install grafana-piechart-panel && \
     grafana-cli plugins install grafana-worldmap-panel
 
 RUN mkdir -p /var/run/sshd /var/log/supervisor && \
-    echo 'root:ContaineR' |chpasswd && \
+    echo 'root:${ROOT_PASSWORD}' |chpasswd && \
     sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
     mkdir /root/.ssh
