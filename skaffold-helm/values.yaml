@@ -1,0 +1,8 @@
+admin_user: root
+admin_password: root
+auth_anonymous_enabled: true
+disable_gravatar: true
+
+image: levkov/grafana
+label_key: app
+label_value: grafana

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  namespace: "default"
+  labels:
+    {{ .Values.label_key }}: {{ .Values.label_value }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{ .Values.label_key }}: {{ .Values.label_value }}
+  template:
+    metadata:
+      labels:
+        {{ .Values.label_key }}: {{ .Values.label_value }}
+    spec:
+      containers:
+      - name: grafana
+        image: {{ .Values.image }}
+        ports:
+        - containerPort: 3000    
+        env:
+          - name: ADMIN_USER
+            value: {{ .Values.admin_user }}
+          - name: ADMIN_PASSWORD
+            value: {{ .Values.admin_password }}
+          - name: AUTH_ANONYMOUS_ENABLED
+            value: {{ quote .Values.auth_anonymous_enabled }}
+          - name: DISABLE_GRAVATAR
+            value: {{ quote .Values.disable_gravatar }}
