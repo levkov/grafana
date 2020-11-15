@@ -8,6 +8,7 @@ jobs:
    machine: true
    environment:
      GRAFANA_VERSION: 7.2.2
+     HELM_EXPERIMENTAL_OCI: 1
    steps:
      - checkout
      - kubernetes/install-kubectl
@@ -16,6 +17,8 @@ jobs:
          version: v3.0.0
      - run: |
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+         docker run -dp 5000:5000 --restart=always --name registry registry
      - run: cd image && docker build --build-arg GRAFANA_VERSION=$GRAFANA_VERSION -t levkov/grafana:$GRAFANA_VERSION .
-     - run: cd image && docker push levkov/grafana:$GRAFANA_VERSION
-     - run: aws version
+     - run: docker push levkov/grafana:$GRAFANA_VERSION
+     - run: helm chart save chart/ localhost:5000/grafana:$GRAFANA_VERSION
+     - run: helm chart list
