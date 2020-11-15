@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 LABEL "org.opencontainers.image.authors"="levkov"
 EXPOSE 9001 22 3000
 WORKDIR /tmp
-ARG GRAFANA_VERSION=7.3.2
+ARG GRAFANA_VERSION
 ARG ROOT_PASSWORD=ContaineR
 
 RUN apt-get update && \

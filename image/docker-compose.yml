@@ -1,8 +1,20 @@
-ct-grafana:
-  build: .
-  ports:
-  - "222:22"
-  - "9001:9001"
-  - "3000:3000"
-  hostname: ct-grafana
-  privileged: false
+version: '3'
+
+services:
+  grafana:
+    image: grafana
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GRAFANA_VERSION: 7.2.2
+    hostname: grafana
+    privileged: false
+    ports:
+    - "9001:9001"
+    - "3000:3000"
+    environment:
+      ADMIN_USER: someuser
+      ADMIN_PASSWORD: verystrongpassword
+      AUTH_ANONYMOUS_ENABLED: "false"
+      DISABLE_GRAVATAR: "true"
