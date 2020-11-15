@@ -2,7 +2,7 @@ version: 2.1
 jobs:
  build:
    machine: true
-   working_directory: ~/image 
+   working_directory: ~/grafana/image 
    environment:
      GRAFANA_VERSION: 7.2.2
    steps:
