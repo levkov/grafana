@@ -10,3 +10,4 @@ jobs:
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
      - run: cd image && docker build --build-arg GRAFANA_VERSION=$GRAFANA_VERSION -t levkov/grafana:$GRAFANA_VERSION .
      - run: cd image && docker push levkov/grafana:$GRAFANA_VERSION
+     - run: helm version
