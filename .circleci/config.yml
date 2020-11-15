@@ -6,8 +6,7 @@ jobs:
      GRAFANA_VERSION: 7.2.2
    steps:
      - checkout
-     - run: cd image && pwd
      - run: |
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-     - run: docker build --build-arg GRAFANA_VERSION=$GRAFANA_VERSION -t levkov/grafana:$GRAFANA_VERSION .
-     - run: docker push levkov/grafana:$GRAFANA_VERSION
+     - run: cd image && docker build --build-arg GRAFANA_VERSION=$GRAFANA_VERSION -t levkov/grafana:$GRAFANA_VERSION .
+     - run: cd image && docker push levkov/grafana:$GRAFANA_VERSION
