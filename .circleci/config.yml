@@ -15,6 +15,10 @@ jobs:
      - aws-cli/install
      - helm/install-helm-client: 
          version: v3.0.0
+     - run: | 
+         curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+         install skaffold /usr/local/bin/
+         rm -rf skaffold    
      - run: |
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
          docker run -dp 5000:5000 --restart=always --name registry registry
@@ -22,6 +26,7 @@ jobs:
      - run: docker push levkov/grafana:$GRAFANA_VERSION
      - run: helm chart save chart/ localhost:5000/grafana:$GRAFANA_VERSION
      - run: helm chart list
+     - run: skaffold version
 
 workflows:
   build:
