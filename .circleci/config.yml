@@ -22,3 +22,11 @@ jobs:
      - run: docker push levkov/grafana:$GRAFANA_VERSION
      - run: helm chart save chart/ localhost:5000/grafana:$GRAFANA_VERSION
      - run: helm chart list
+
+workflows:
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
