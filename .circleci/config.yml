@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   kubernetes: circleci/kubernetes@0.11.2
+  helm: circleci/helm@1.0.1
 jobs:
  build:
    machine: true
@@ -9,8 +10,10 @@ jobs:
    steps:
      - checkout
      - kubernetes/install-kubectl
+     - helm/install-helm-client 
+         version: v3.0.0
      - run: |
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
      - run: cd image && docker build --build-arg GRAFANA_VERSION=$GRAFANA_VERSION -t levkov/grafana:$GRAFANA_VERSION .
      - run: cd image && docker push levkov/grafana:$GRAFANA_VERSION
-     - run: kubectl version
+     - run: helm version
