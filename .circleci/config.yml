@@ -4,7 +4,7 @@ orbs:
   helm: circleci/helm@1.0.1
   aws-cli: circleci/aws-cli@1.3.0
 jobs:
- build:
+ build-and-deploy:
    machine: true
    environment:
      GRAFANA_VERSION: 7.2.2
@@ -26,12 +26,12 @@ jobs:
      - run: docker push levkov/grafana:$GRAFANA_VERSION
      - run: helm chart save chart/ localhost:5000/grafana:$GRAFANA_VERSION
      - run: helm chart list
-     - run: skaffold version
+     - run: helm chart push localhost:5000/grafana:$GRAFANA_VERSION
 
 workflows:
-  build:
+  my-little-workflow:
     jobs:
-      - build:
+      - build-and-deploy:
           filters:
             branches:
               only: master
