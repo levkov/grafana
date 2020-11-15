@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 LABEL "org.opencontainers.image.authors"="levkov"
 EXPOSE 9001 22 3000
 WORKDIR /tmp
-ARG GRAFANA_VERSION=5.3.0
+ARG GRAFANA_VERSION=7.3.2
 ARG ROOT_PASSWORD=ContaineR
 
 RUN apt-get update && \
@@ -16,7 +16,7 @@ RUN apt-get update && \
                     dos2unix \
                     -y
 
-RUN wget --no-check-certificate https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_${GRAFANA_VERSION}_amd64.deb  && \
+RUN wget --no-check-certificate https://dl.grafana.com/oss/release/grafana_${GRAFANA_VERSION}_amd64.deb  && \
     dpkg -i grafana_${GRAFANA_VERSION}_amd64.deb && \
     rm -rf grafana_${GRAFANA_VERSION}_amd64.deb
 
