@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  kubernetes: circleci/kubernetes@0.11.2
 jobs:
  build:
    machine: true
@@ -6,8 +8,9 @@ jobs:
      GRAFANA_VERSION: 7.2.2
    steps:
      - checkout
+     - kubernetes/install-kubectl
      - run: |
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
      - run: cd image && docker build --build-arg GRAFANA_VERSION=$GRAFANA_VERSION -t levkov/grafana:$GRAFANA_VERSION .
      - run: cd image && docker push levkov/grafana:$GRAFANA_VERSION
-     - run: helm version
+     - run: kubectl version
