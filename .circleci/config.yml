@@ -10,7 +10,7 @@ jobs:
    steps:
      - checkout
      - kubernetes/install-kubectl
-     - helm/install-helm-client 
+     - helm/install-helm-client: 
          version: v3.0.0
      - run: |
          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
