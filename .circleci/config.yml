@@ -11,6 +11,8 @@ jobs:
      HELM_EXPERIMENTAL_OCI: 1
    steps:
      - checkout
+     - setup_remote_docker:
+         docker_layer_caching: true
      - kubernetes/install-kubectl
      - aws-cli/install
      - helm/install-helm-client: 
